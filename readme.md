@@ -7,51 +7,63 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## About Laravel
+## About this  Laravel project
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+ I will show you how you can filter your data based on the type and categories
+---
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
+## How to run this project
 
-## Learning Laravel
+First : Download this project 
+Second: Run in you terminal composer install
+Third : Open your phpMyadmin and import the file (test.sql) with project file and change Your user name and pass
+Forth : Run in your terminal PHP artisan migrate.
+Fifth : Run php arisan serv
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
+# How to make this project with your own
+ Step 1: Install Laravel.
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+ ## Step 2: Create migration and dummy data. (php artisan make:model Test -m) 
+         (create migration like in my migration file file)
+          then php artisan migrate
+          
+### next step is to generate the fake data using the factory. So create a factory using the following command.
+          (php artisan make:factory TestFactory --model=Test)
+          This command It will create a file inside database  >>  factories folder called TestFactory.php.
+          Make your file like my project file.
+        
+### next step is to generate the random data.
+          open he terminal then "php artisan tinker"  
+           
+           then  "factory(\App\Test::class, 20)->create();"
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
+## Step 3: Create an endpoint. 
+Next step is to create a ProductController file. So type the following command. (php artisan make:controller TestController).
+Change your Controller to my controller file 
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Pulse Storm](http://www.pulsestorm.net/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
+### Define the route inside the web.php file.
 
-## Contributing
+Route::get('/tests', 'TestsController@index')->name('products');
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Step 4: Create a filter. ( Make your fie like my files) 
 
-## Security Vulnerabilities
+ Now, create a Filters folder inside app directory.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+In that folder, create one file called TypeFilter.php.
+
+### inside TestController.php file, we can write the following code.
+#### public function index(Request $request)
+    {
+        return Product::filter($request)->get();
+    }
+### Inside Filters folder, create one abstract class called AbstractFilter.php.
+### Next step is to create a new file called TestFilter.php inside Filters directory.
+
+
+
 
 ## License
 
